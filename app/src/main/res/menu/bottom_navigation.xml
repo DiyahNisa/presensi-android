@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_presensi"
+        android:icon="@drawable/ic_baseline_clock_24"
+        android:title="Presensi" />
+
+    <item
+        android:id="@+id/nav_logBook"
+        android:icon="@drawable/ic_baseline_collections_bookmark_24"
+        android:title="Log Book" />
+
+    <item
+        android:id="@+id/nav_izin"
+        android:icon="@drawable/ic_baseline_envelope_24"
+        android:title="Izin" />
+
+
+</menu>

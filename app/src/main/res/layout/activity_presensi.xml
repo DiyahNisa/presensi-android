@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/bg_presensi1">
+
+
+    <TextView
+        android:id="@+id/textName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="65dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="260dp"
+        android:layout_marginLeft="65dp"
+        android:text="Tanggal"
+         android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/editTanggal"
+        android:layout_width="290dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="285dp"
+        android:layout_marginLeft="65dp"
+        android:background="@drawable/rectangle"
+        android:ems="10"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="335dp"
+        android:layout_marginLeft="65dp"
+        android:text="Waktu"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/editTime"
+        android:layout_width="290dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="360dp"
+        android:layout_marginLeft="65dp"
+        android:background="@drawable/rectangle"
+        android:ems="10"
+        android:inputType="time" />
+
+    <Button
+        android:id="@+id/btnPresensi"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="430dp"
+        android:layout_marginLeft="265dp"
+        android:text="Kirim"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/button_presensi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation"/>
+
+
+</RelativeLayout>

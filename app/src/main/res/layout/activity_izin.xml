@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/bg_izin1">
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="175dp"
+        android:layout_marginLeft="65dp"
+        android:text="Tanggal Mulai Izin"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/editTanggal3"
+        android:layout_width="290dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="65dp"
+        android:background="@drawable/rectangle"
+        android:ems="10"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="65dp"
+        android:text="Tanggal Masuk"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/editTanggal4"
+        android:layout_width="290dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="275dp"
+        android:layout_marginLeft="65dp"
+        android:background="@drawable/rectangle"
+        android:ems="10"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="325dp"
+        android:layout_marginLeft="65dp"
+        android:text="Durasi Izin"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:layout_width="290dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="65dp"
+        android:background="@drawable/rectangle"/>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="65dp"
+        android:text="Bukti Izin"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:layout_width="290dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="425dp"
+        android:layout_marginLeft="65dp"
+        android:background="@drawable/rectangle"/>
+
+    <Button
+        android:id="@+id/Button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="510dp"
+        android:layout_marginLeft="160dp"
+        android:text="Kirim"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white" />
+
+    <Button
+        android:id="@+id/Button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="510dp"
+        android:layout_marginLeft="265dp"
+        android:text="Lihat"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/button_izin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation"/>
+
+</RelativeLayout>
