@@ -43,7 +43,17 @@ public class LogBook extends AppCompatActivity {
         editTanggal2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog2();
+                Calendar calendar = Calendar.getInstance();
+
+                datePickerDialog = new DatePickerDialog(LogBook.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(year,month,dayOfMonth);
+                        editTanggal2.setText(dateFormat.format(newDate.getTime()));
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
             }
         });
 
@@ -54,14 +64,46 @@ public class LogBook extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                showTime2();
+                Calendar calendar= Calendar.getInstance();
+                int hours=calendar.get(Calendar.HOUR_OF_DAY);
+                int mins=calendar.get(Calendar.MINUTE);
+//        TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                        c.set(Calendar.MINUTE,minute);
+                        c.setTimeZone(TimeZone.getDefault());
+                        SimpleDateFormat format = new SimpleDateFormat("k:mm a");
+                        String time = format.format(c.getTime());
+                        editTime2.setText(time);
+                    }
+                },hours ,mins, false);
+                timePickerDialog.show();
             }
         });
 
         editTime3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTime3();
+                Calendar calendar= Calendar.getInstance();
+                int hours=calendar.get(Calendar.HOUR_OF_DAY);
+                int mins=calendar.get(Calendar.MINUTE);
+//        TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                        c.set(Calendar.MINUTE,minute);
+                        c.setTimeZone(TimeZone.getDefault());
+                        SimpleDateFormat format = new SimpleDateFormat("k:mm a");
+                        String time = format.format(c.getTime());
+                        editTime3.setText(time);
+                    }
+                },hours ,mins, false);
+                timePickerDialog.show();
             }
         });
 
@@ -102,63 +144,9 @@ public class LogBook extends AppCompatActivity {
         });
     }
 
-    private void showTime2() {
-        Calendar calendar= Calendar.getInstance();
-        int hours=calendar.get(Calendar.HOUR_OF_DAY);
-        int mins=calendar.get(Calendar.MINUTE);
-//        TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Calendar c = Calendar.getInstance();
-                c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                c.set(Calendar.MINUTE,minute);
-                c.setTimeZone(TimeZone.getDefault());
-                SimpleDateFormat format = new SimpleDateFormat("k:mm a");
-                String time = format.format(c.getTime());
-                editTime2.setText(time);
-            }
-        },hours ,mins, false);
-        timePickerDialog.show();
-    }
-
-    private void showTime3() {
-        Calendar calendar= Calendar.getInstance();
-        int hours=calendar.get(Calendar.HOUR_OF_DAY);
-        int mins=calendar.get(Calendar.MINUTE);
-//        TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Calendar c = Calendar.getInstance();
-                c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                c.set(Calendar.MINUTE,minute);
-                c.setTimeZone(TimeZone.getDefault());
-                SimpleDateFormat format = new SimpleDateFormat("k:mm a");
-                String time = format.format(c.getTime());
-                editTime3.setText(time);
-            }
-        },hours ,mins, false);
-        timePickerDialog.show();
-    }
-
-    private void showDialog2() {
-        Calendar calendar = Calendar.getInstance();
-
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year,month,dayOfMonth);
-                editTanggal2.setText(dateFormat.format(newDate.getTime()));
-            }
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();;
-    }
-
+// Menu LogOut
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.bottom_logout, menu);
         return true;
     }
@@ -167,35 +155,31 @@ public class LogBook extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ((item.getItemId())) {
             case R.id.nav_logOut: {
-                logout();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                alertDialogBuilder.setTitle("Konfirmasi");
+                alertDialogBuilder
+                        .setMessage("Apakah anda yakin ingin keluar ?")
+                        .setCancelable(false)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.clear();
+                                editor.apply();
+                                startActivity(new Intent(LogBook.this, Login.class));
+                                finish();
+                            }
+                        }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.cancel();
+                    }
+                });
+                android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        alertDialogBuilder.setTitle("Konfirmasi");
-        alertDialogBuilder
-                .setMessage("Apakah anda yakin ingin keluar ?")
-                .setCancelable(false)
-                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        startActivity(new Intent(LogBook.this, Login.class));
-                        finish();
-                    }
-                }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                dialog.cancel();
-            }
-        });
-        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 }

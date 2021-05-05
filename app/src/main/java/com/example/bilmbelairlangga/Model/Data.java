@@ -3,10 +3,9 @@ package com.example.bilmbelairlangga.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
 public class Data {
 
-    @SerializedName("tglPresensi")
+        @SerializedName("tglPresensi")
     @Expose
     private String tglPresensi;
     @SerializedName("waktuPresensi")

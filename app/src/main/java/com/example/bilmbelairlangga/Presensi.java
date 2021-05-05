@@ -18,12 +18,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bilmbelairlangga.ApiService.PresensiApi;
+import com.example.bilmbelairlangga.ApiService.ApiClient;
 import com.example.bilmbelairlangga.Model.ResponPresensi;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -54,7 +53,6 @@ public class Presensi extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Presensi.this);
 //        String namaUser = sharedPreferences.getString(Login.KEY_USER, null);
-
         textName = (TextView) findViewById(R.id.textName);
         editTanggal=(EditText)findViewById(R.id.editTanggal);
 
@@ -139,8 +137,10 @@ public class Presensi extends AppCompatActivity {
 
     private void kirimPresensi() {
         //ambil data dari editText
-        Log.d("editTanggal",tglPresensi = editTanggal.getText().toString());
-        Log.d("waktuPresensi",waktuPresensi = editTime.getText().toString());
+        tglPresensi = editTanggal.getText().toString();
+        waktuPresensi = editTime.getText().toString();
+        Log.d("editTanggal",tglPresensi);
+        Log.d("waktuPresensi",waktuPresensi);
         if (tglPresensi.isEmpty()) {
             editTanggal.setError("Masukkan Tanggal");
         } else if (waktuPresensi.isEmpty()) {
@@ -157,25 +157,44 @@ public class Presensi extends AppCompatActivity {
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            PresensiApi presensiApi = retrofit.create(PresensiApi.class);
+            ApiClient presensiApi = retrofit.create(ApiClient.class);
             Call<ResponPresensi> call = presensiApi.addPresensi(tglPresensi, waktuPresensi);
             call.enqueue(new Callback<ResponPresensi>() {
                 @Override
                 public void onResponse(Call<ResponPresensi> call, Response<ResponPresensi> response) {
-
                     String success = response.body().getSuccess();
                     String message = response.body().getMessage();
                     Log.d("RETRO", "Respon : " + message);
 
-                    Toast.makeText(Presensi.this, success, Toast.LENGTH_SHORT).show();
-
-//                    if (success == "Ok") {
+//                    Toast.makeText(Presensi.this, success, Toast.LENGTH_SHORT).show();
+                    if (success != null) {
 //                        Toast.makeText(Presensi.this, message, Toast.LENGTH_SHORT).show();
-//                    } else {
+                        alertDialogBuilder.setTitle("Informasi");
+                        alertDialogBuilder
+                                .setMessage(message)
+                                .setCancelable(false)
+                                .setNeutralButton("Oke", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                });
+                        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    } else {
 //                        Toast.makeText(Presensi.this, "Tidak berhasil melakukan presensi", Toast.LENGTH_SHORT).show();
-//                    }
+                        alertDialogBuilder.setTitle("Informasi");
+                        alertDialogBuilder
+                                .setMessage("Tidak berhasil melakukan presensi")
+                                .setCancelable(false)
+                                .setNeutralButton("Oke", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                });
+                        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
                 }
-
                 @Override
                 public void onFailure(Call<ResponPresensi> call, Throwable t) {
                     progressDialog.dismiss();
@@ -196,6 +215,7 @@ public class Presensi extends AppCompatActivity {
         }
     }
 
+    //Menu LogOut
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bottom_logout, menu);

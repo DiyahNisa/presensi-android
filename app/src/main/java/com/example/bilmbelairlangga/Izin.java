@@ -107,9 +107,9 @@ public class Izin extends AppCompatActivity {
         datePickerDialog.show();;
     }
 
+//    Menu LogOut
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.bottom_logout, menu);
         return true;
     }
@@ -118,36 +118,31 @@ public class Izin extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ((item.getItemId())) {
             case R.id.nav_logOut: {
-                logout();
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        alertDialogBuilder.setTitle("Konfirmasi");
-        alertDialogBuilder
-                .setMessage("Apakah anda yakin ingin keluar ?")
-                .setCancelable(false)
-                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                alertDialogBuilder.setTitle("Konfirmasi");
+                alertDialogBuilder
+                        .setMessage("Apakah anda yakin ingin keluar ?")
+                        .setCancelable(false)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.clear();
+                                editor.apply();
+                                startActivity(new Intent(Izin.this, Login.class));
+                                finish();
+                            }
+                        }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
-                        startActivity(new Intent(Izin.this, Login.class));
-                        finish();
+                        dialog.cancel();
                     }
-                }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                dialog.cancel();
+                });
+                android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
-        });
-        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
