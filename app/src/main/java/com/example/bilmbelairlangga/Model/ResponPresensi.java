@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResponPresensi {
 
-        @SerializedName("success")
+    @SerializedName("success")
     @Expose
     private String success;
     @SerializedName("message")
@@ -41,4 +41,3 @@ public class ResponPresensi {
     }
 
 }
-

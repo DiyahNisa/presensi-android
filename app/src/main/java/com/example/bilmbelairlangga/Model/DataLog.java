@@ -1,66 +1,57 @@
 package com.example.bilmbelairlangga.Model;
 
-import java.util.ArrayList;
+import android.os.Build;
 
-public class ArrayLog {
-    String tglKegiatan, waktuMulai, waktuSelesai,ketLog;
-    String success;
-    String message;
+import androidx.annotation.RequiresApi;
 
-    public ResponLog(String tglKegiatan, String waktuMulai, String waktuSelesai, String ketLog, String success, String message) {
-        this.tglKegiatan = tglKegiatan;
-        this.waktuMulai = waktuMulai;
-        this.waktuSelesai = waktuSelesai;
-        this.ketLog = ketLog;
-        this.success = success;
-        this.message = message;
-    }
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public String getTglKegiatan() {
-        return tglKegiatan;
-    }
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
-    public void setTglKegiatan(String tglKegiatan) {
-        this.tglKegiatan = tglKegiatan;
-    }
+public class DataLog {
 
-    public String getWaktuMulai() {
-        return waktuMulai;
-    }
+        @SerializedName("idLogBook")
+        @Expose
+        private Integer idLogBook;
+        @SerializedName("tglKegiatan")
+        @Expose
+        private String tglKegiatan;
+        @SerializedName("waktuMulai")
+        @Expose
+        private String waktuMulai;
+        @SerializedName("waktuSelesai")
+        @Expose
+        private String waktuSelesai;
+        @SerializedName("ketLog")
+        @Expose
+        private String ketLog;
 
-    public void setWaktuMulai(String waktuMulai) {
-        this.waktuMulai = waktuMulai;
-    }
+        public Integer getIdLogBook() {
+            return idLogBook;
+        }
 
-    public String getWaktuSelesai() {
-        return waktuSelesai;
-    }
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        public String getTglKegiatan() {
+            Locale indonesia = new Locale("ID");
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy",indonesia);
+            OffsetDateTime dateTime = OffsetDateTime.parse(tglKegiatan).plusDays(1);
+            String tgl = dateTime.format(dateFormatter);
+            return tgl;
+        }
 
-    public void setWaktuSelesai(String waktuSelesai) {
-        this.waktuSelesai = waktuSelesai;
-    }
+        public String getWaktuMulai() {
+            return waktuMulai;
+        }
 
-    public String getKetLog() {
-        return ketLog;
-    }
+        public String getWaktuSelesai() {
+            return waktuSelesai;
+        }
 
-    public void setKetLog(String ketLog) {
-        this.ketLog = ketLog;
-    }
-
-    public String getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(String success) {
-        this.success = success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+        public String getKetLog() {
+            return ketLog;
+        }
 }
+

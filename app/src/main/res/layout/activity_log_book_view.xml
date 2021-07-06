@@ -7,6 +7,8 @@
     tools:context=".LogBookView">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Rv_log"
+        tools:listitem="@layout/list_item_log"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

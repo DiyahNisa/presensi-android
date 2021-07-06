@@ -1,5 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<androidx.cardview.widget.CardView
+    android:id="@+id/listLog"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:weightSum="70"
+        android:background="@drawable/bg_log_list">
+
+        <LinearLayout
+            android:layout_width="381dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:weightSum="4"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:id="@+id/textIdLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Id LogBook"
+                android:visibility="gone" />
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="35dp"-->
+<!--                android:layout_marginLeft="70dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:shadowColor="@color/black"-->
+<!--                android:text="LOG BOOK HARIAN TENTOR"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="10pt" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="65dp"
+                android:layout_marginLeft="25dp">
+                <TextView
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tanggal Kegiatan  : "/>
+                <TextView
+                    android:id="@+id/textTglKegiatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tampilan" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="25dp">
+                <TextView
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Waktu Mulai       : " />
+                <TextView
+                    android:id="@+id/textWaktuMulai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tampilan"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="25dp">
+                <TextView
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Waktu Selesai     : " />
+                <TextView
+                    android:id="@+id/textWaktuSelesai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tampilan"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="25dp">
+                <TextView
+                    android:layout_width="264dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Keterangan        :" />
+                <TextView
+                    android:id="@+id/textKetLog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tampilan"/>
+            </LinearLayout>
+
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="45dp"-->
+<!--                android:id="@+id/btnhpsLog"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:layout_marginLeft="285dp"-->
+<!--                android:layout_marginTop= "10dp"-->
+<!--                android:text="Hapus"-->
+<!--                android:textColor="@color/black"/>-->
+
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

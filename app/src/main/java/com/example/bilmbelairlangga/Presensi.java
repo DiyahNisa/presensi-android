@@ -1,26 +1,29 @@
-package com.example.bilmbelairlangga;
+ package com.example.bilmbelairlangga;
 
-import android.app.AlertDialog;
+ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
+ import android.os.Build;
+ import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+ import androidx.annotation.RequiresApi;
+ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bilmbelairlangga.ApiService.ApiClient;
 import com.example.bilmbelairlangga.Model.ResponPresensi;
@@ -38,23 +41,65 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Presensi extends AppCompatActivity {
 
-    TextView textName;
     EditText editTanggal, editTime;
-    String tglPresensi, waktuPresensi;
+    String karyawan_id, tglPresensi, waktuPresensi, ketPresensi, lokasiRuang;
     DatePickerDialog datePickerDialog;
     SimpleDateFormat dateFormat;
     Button btnPresensi;
     public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
     SharedPreferences sharedPreferences;
+    Spinner spinner;
+    private String [] lokasiR = {"Alpha.01","Alpha.02","Alpha.03","Alpha.04",
+                                    "Betha.01","Betha.02","Betha.03","Betha.04" };
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presensi);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Presensi.this);
-//        String namaUser = sharedPreferences.getString(Login.KEY_USER, null);
-        textName = (TextView) findViewById(R.id.textName);
         editTanggal=(EditText)findViewById(R.id.editTanggal);
+        karyawan_id = sharedPreferences.getString("karyawan_id", null);
+
+        spinner = findViewById(R.id.spinner);
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item, lokasiR);
+        spinner.setAdapter(adapterSpinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                switch (i) {
+                    case 0:
+                        lokasiRuang = "Alpha.01";
+                        break;
+                    case 1:
+                        lokasiRuang = "Alpha.02";
+                        break;
+                    case 3:
+                        lokasiRuang = "Alpha.03";
+                        break;
+                    case 4:
+                        lokasiRuang = "Alpha.04";
+                        break;
+                    case 5:
+                        lokasiRuang = "Betha.01";
+                        break;
+                    case 6:
+                        lokasiRuang = "Betha.02";
+                        break;
+                    case 7:
+                        lokasiRuang ="Betha.03";
+                        break;
+                    case 8:
+                        lokasiRuang = "Betha.04";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         dateFormat = new SimpleDateFormat("dd-MM-yyy");
         editTanggal.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +154,7 @@ public class Presensi extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.button_presensi);
         bottomNavigationView.setSelectedItemId(R.id.nav_presensi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
@@ -136,12 +182,10 @@ public class Presensi extends AppCompatActivity {
     }
 
     private void kirimPresensi() {
-        //ambil data dari editText
         tglPresensi = editTanggal.getText().toString();
         waktuPresensi = editTime.getText().toString();
-        Log.d("editTanggal",tglPresensi);
-        Log.d("waktuPresensi",waktuPresensi);
-        if (tglPresensi.isEmpty()) {
+        ketPresensi = "Hadir";
+         if (tglPresensi.isEmpty()) {
             editTanggal.setError("Masukkan Tanggal");
         } else if (waktuPresensi.isEmpty()) {
             editTime.setError("Masukkan Waktu");
@@ -158,17 +202,13 @@ public class Presensi extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             ApiClient presensiApi = retrofit.create(ApiClient.class);
-            Call<ResponPresensi> call = presensiApi.addPresensi(tglPresensi, waktuPresensi);
+            Call<ResponPresensi> call = presensiApi.addPresensi(karyawan_id,tglPresensi,waktuPresensi,ketPresensi, lokasiRuang);
             call.enqueue(new Callback<ResponPresensi>() {
                 @Override
                 public void onResponse(Call<ResponPresensi> call, Response<ResponPresensi> response) {
                     String success = response.body().getSuccess();
                     String message = response.body().getMessage();
-                    Log.d("RETRO", "Respon : " + message);
-
-//                    Toast.makeText(Presensi.this, success, Toast.LENGTH_SHORT).show();
                     if (success != null) {
-//                        Toast.makeText(Presensi.this, message, Toast.LENGTH_SHORT).show();
                         alertDialogBuilder.setTitle("Informasi");
                         alertDialogBuilder
                                 .setMessage(message)
@@ -176,6 +216,9 @@ public class Presensi extends AppCompatActivity {
                                 .setNeutralButton("Oke", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                        Intent intent = new Intent(Presensi.this,LogBook.class);
+                                        intent.putExtra("karyawan_id",karyawan_id);
+                                        startActivity(intent);
                                     }
                                 });
                         androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();

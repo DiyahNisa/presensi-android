@@ -1,105 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@drawable/bg_izin1">
+    android:background="@drawable/bg_izin">
 
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="258dp"
+        android:layout_height="100dp"
+        android:background="@drawable/logo_izin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="370dp"
+        android:layout_height="385dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/f_izin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="175dp"
-        android:layout_marginLeft="65dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="198dp"
+        android:layout_marginRight="198dp"
         android:text="Tanggal Mulai Izin"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
     <EditText
-        android:id="@+id/editTanggal3"
+        android:id="@+id/editTglIzin"
         android:layout_width="290dp"
         android:layout_height="40dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="65dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
         android:background="@drawable/rectangle"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_marginLeft="65dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="20dp"
         android:text="Tanggal Masuk"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/editTglIzin" />
 
     <EditText
-        android:id="@+id/editTanggal4"
+        android:id="@+id/editTglMasuk"
         android:layout_width="290dp"
         android:layout_height="40dp"
-        android:layout_marginTop="275dp"
-        android:layout_marginLeft="65dp"
         android:background="@drawable/rectangle"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="325dp"
-        android:layout_marginLeft="65dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="12dp"
         android:text="Durasi Izin"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/editTglMasuk" />
 
     <EditText
+        android:id="@+id/editDurasi"
         android:layout_width="290dp"
         android:layout_height="40dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginLeft="65dp"
-        android:background="@drawable/rectangle"/>
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:layout_marginLeft="65dp"
-        android:text="Bukti Izin"
-        android:textColor="@color/black"/>
-
-    <EditText
-        android:layout_width="290dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="425dp"
-        android:layout_marginLeft="65dp"
-        android:background="@drawable/rectangle"/>
+    <ImageView
+        android:id="@+id/viewSurat"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="Not Selected"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/editDurasi" />
 
     <Button
-        android:id="@+id/Button2"
+        android:id="@+id/btnSurat"
+        android:layout_width="155dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:backgroundTint="@color/white"
+        android:text="Bukti Surat"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintStart_toEndOf="@+id/viewSurat"
+        app:layout_constraintTop_toBottomOf="@+id/editDurasi" />
+
+    <Button
+        android:id="@+id/btnIzin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="510dp"
-        android:layout_marginLeft="160dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:backgroundTint="@color/white"
         android:text="Kirim"
         android:textColor="@color/black"
-        android:backgroundTint="@color/white" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/btnSurat" />
 
     <Button
-        android:id="@+id/Button3"
+        android:id="@+id/btnLihatIzin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="510dp"
-        android:layout_marginLeft="265dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/white"
         android:text="Lihat"
         android:textColor="@color/black"
-        android:backgroundTint="@color/white" />
+        app:layout_constraintEnd_toStartOf="@+id/btnIzin"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/btnSurat" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/button_izin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation"/>
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLihatIzin"
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/bottom_navigation" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

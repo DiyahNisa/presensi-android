@@ -27,7 +27,7 @@ public class Login extends AppCompatActivity {
 
     public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
     String username, password;
-    Integer karyawan_id;
+    String karyawan_id, message, success;
     EditText editUsername, editPassword;
     Button btnLogin;
     static String KEY_USER = "nama_user";
@@ -84,8 +84,9 @@ public class Login extends AppCompatActivity {
             call.enqueue(new Callback<Value>() {
                 @Override
                 public void onResponse(Call<Value> call, Response<Value> response) {
-                    String success = response.body().getSuccess();
-                    String message = response.body().getMessage();
+                    success = response.body().getSuccess();
+                    message = response.body().getMessage();
+                    karyawan_id = response.body().getKaryawan_id();
                     progressDialog.dismiss();
                     if (success.equals("1")) {
                         gotoMainActivity();
@@ -128,13 +129,13 @@ public class Login extends AppCompatActivity {
         //menyimpan inputan dengan shared preference
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_USER, username);
-        editor.putString(KEY_USER, password);
-        editor.putString("status", "Logged In");
-        editor.apply();
-        Intent intent = new Intent(Login.this,
-                MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-}
+        editor.putString(KEY_USER, message);
+        editor.putString( "karyawan_id", karyawan_id);
+                editor.putString("status", "Logged In");
+                editor.apply();
+                Intent intent = new Intent(Login.this,
+                        MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }

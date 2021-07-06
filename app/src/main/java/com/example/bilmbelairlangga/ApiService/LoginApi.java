@@ -8,7 +8,6 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface LoginApi {
-
     // Fungsi ini untuk memanggil API "http://192.168.0.104/airlanggaBimbel/public/api/login"
     @FormUrlEncoded
     @POST("login")
