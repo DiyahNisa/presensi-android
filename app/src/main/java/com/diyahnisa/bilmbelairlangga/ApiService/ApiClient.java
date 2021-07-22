@@ -1,10 +1,10 @@
-package com.example.bilmbelairlangga.ApiService;
+package com.diyahnisa.bilmbelairlangga.ApiService;
 
-import com.example.bilmbelairlangga.Model.DataIzin;
-import com.example.bilmbelairlangga.Model.DataLog;
-import com.example.bilmbelairlangga.Model.ResponIzin;
-import com.example.bilmbelairlangga.Model.ResponLog;
-import com.example.bilmbelairlangga.Model.ResponPresensi;
+import com.diyahnisa.bilmbelairlangga.Model.DataIzin;
+import com.diyahnisa.bilmbelairlangga.Model.DataLog;
+import com.diyahnisa.bilmbelairlangga.Model.ResponIzin;
+import com.diyahnisa.bilmbelairlangga.Model.ResponLog;
+import com.diyahnisa.bilmbelairlangga.Model.ResponPresensi;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface ApiClient {
     //--------------------------------- MENU LOG PRESENSI ------------------------------------//
     @FormUrlEncoded
     @POST("presensi")
-    Call<ResponPresensi> addPresensi(@Field("karyawan_id") String karyawan_id,
+    Call<ResponPresensi> addPresensi(@Field("karyawan_kode") String karyawan_kode,
                                      @Field("tglPresensi") String tglPresensi,
                                      @Field("waktuPresensi") String waktuPresensi,
                                      @Field("ketPresensi") String ketPresensi,
@@ -34,27 +34,27 @@ public interface ApiClient {
     @Multipart
     @POST("logBook")
     Call<ResponLog> addLog(
-            @Part("karyawan_id") RequestBody karyawan_id,
+            @Part("karyawan_kode") RequestBody karyawan_kode,
             @Part("tglKegiatan") RequestBody tglKegiatan,
             @Part("waktuMulai") RequestBody waktuMulai,
             @Part("waktuSelesai") RequestBody waktuSelesai,
             @Part("ketLog") RequestBody ketLog,
             @Part MultipartBody.Part buktiFoto);
 
-    @GET("logBook/{karyawan_id}")
-    Call<List<DataLog>> getLog1(@Path("karyawan_id") String karyawan_id);
+    @GET("logBook/{karyawan_kode}")
+    Call<List<DataLog>> getLog1(@Path("karyawan_kode") String karyawan_kode);
 
     //--------------------------------- MENU IZIN --------------------------------------------//
     @Multipart
     @POST("izin")
     Call<ResponIzin> addIzin(
-            @Part("karyawan_id")RequestBody karyawan_id,
+            @Part("karyawan_kode")RequestBody karyawan_kode,
             @Part("tglIzin")RequestBody tglIzin,
             @Part("tglSelesai")RequestBody tglSelesai,
             @Part("durasi")RequestBody durasi,
             @Part MultipartBody.Part buktiSurat);
 
-    @GET("izin/{karyawan_id}")
-    Call<List<DataIzin>> getIzin(@Path("karyawan_id") String karyawan_id);
+    @GET("izin/{karyawan_kode}")
+    Call<List<DataIzin>> getIzin(@Path("karyawan_kode") String karyawan_kode);
 
 }

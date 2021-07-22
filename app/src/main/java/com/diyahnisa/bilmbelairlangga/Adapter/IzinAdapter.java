@@ -1,4 +1,4 @@
-package com.example.bilmbelairlangga.Adapter;
+package com.diyahnisa.bilmbelairlangga.Adapter;
 
 import android.content.Context;
 import android.os.Build;
@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bilmbelairlangga.Model.DataIzin;
-import com.example.bilmbelairlangga.R;
+import com.diyahnisa.bilmbelairlangga.Model.DataIzin;
+import com.diyahnisa.bilmbelairlangga.R;
 
 import java.util.List;
 

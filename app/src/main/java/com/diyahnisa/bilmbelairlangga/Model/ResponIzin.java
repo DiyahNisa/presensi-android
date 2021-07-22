@@ -1,20 +1,17 @@
-package com.example.bilmbelairlangga.Model;
+package com.diyahnisa.bilmbelairlangga.Model;
 
-
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponPresensi {
+import java.util.List;
+
+public class ResponIzin {
 
     @SerializedName("success")
-    @Expose
     private String success;
     @SerializedName("message")
-    @Expose
     private String message;
-    @SerializedName("data")
-    @Expose
-    private Data data;
+    @SerializedName ("DataIzin")
+    private List<DataIzin> result;
 
     public String getSuccess() {
         return success;
@@ -32,12 +29,11 @@ public class ResponPresensi {
         this.message = message;
     }
 
-    public Data getData() {
-        return data;
+    public List<DataIzin> getResult() {
+        return result;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public void setResult(List<DataIzin> result) {
+        this.result = result;
     }
-
 }

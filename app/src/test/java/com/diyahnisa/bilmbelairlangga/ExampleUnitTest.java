@@ -1,4 +1,4 @@
-package com.example.bilmbelairlangga;
+package com.diyahnisa.bilmbelairlangga;
 
 import org.junit.Test;
 

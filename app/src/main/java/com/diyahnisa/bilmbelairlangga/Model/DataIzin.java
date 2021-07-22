@@ -1,4 +1,4 @@
-package com.example.bilmbelairlangga.Model;
+package com.diyahnisa.bilmbelairlangga.Model;
 
 import android.os.Build;
 

@@ -1,4 +1,4 @@
-package com.example.bilmbelairlangga;
+package com.diyahnisa.bilmbelairlangga;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bilmbelairlangga.Adapter.LogAdapter;
-import com.example.bilmbelairlangga.ApiService.ApiClient;
-import com.example.bilmbelairlangga.Model.DataLog;
+import com.diyahnisa.bilmbelairlangga.Adapter.LogAdapter;
+import com.diyahnisa.bilmbelairlangga.ApiService.ApiClient;
+import com.diyahnisa.bilmbelairlangga.Model.DataLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +27,13 @@ public class LogBookView extends AppCompatActivity {
 
     RecyclerView Rv_Log;
     CardView logList;
-    String  karyawan_id;
+    String  karyawan_kode;
     SharedPreferences sharedPreferences;
     private RecyclerView.Adapter adData;
     private RecyclerView.LayoutManager lmData;
     private List<DataLog> listLog = new ArrayList<>();
-    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
+
+    public static final String BASE_URL = "http://192.168.1.11/airlanggaBimbel/public/api/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class LogBookView extends AppCompatActivity {
         setContentView(R.layout.activity_log_book_view);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LogBookView.this);
-        karyawan_id = sharedPreferences.getString("karyawan_id", null);
+        karyawan_kode = sharedPreferences.getString("karyawan_kode", null);
         Rv_Log = (RecyclerView) findViewById(R.id.Rv_log);
         lmData = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
         Rv_Log.setLayoutManager(lmData);
@@ -54,7 +55,7 @@ public class LogBookView extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiClient logBookApi = retrofit.create(ApiClient.class);
-        Call<List<DataLog>> call = logBookApi.getLog1(karyawan_id);
+        Call<List<DataLog>> call = logBookApi.getLog1(karyawan_kode);
         call.enqueue(new Callback<List<DataLog>>() {
             @Override
             public void onResponse(Call<List<DataLog>> call, Response<List<DataLog>> response) {

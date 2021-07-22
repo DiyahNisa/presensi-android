@@ -1,4 +1,4 @@
-package com.example.bilmbelairlangga;
+package com.diyahnisa.bilmbelairlangga;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bilmbelairlangga.Adapter.IzinAdapter;
-import com.example.bilmbelairlangga.ApiService.ApiClient;
-import com.example.bilmbelairlangga.Model.DataIzin;
+import com.diyahnisa.bilmbelairlangga.Adapter.IzinAdapter;
+import com.diyahnisa.bilmbelairlangga.ApiService.ApiClient;
+import com.diyahnisa.bilmbelairlangga.Model.DataIzin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,9 @@ public class IzinView extends AppCompatActivity {
     private RecyclerView.LayoutManager lmData;
     private List<DataIzin> listIzin = new ArrayList<>();
     ProgressDialog pd;
-    String karyawan_id;
+    String karyawan_kode;
     SharedPreferences sharedPreferences;
-    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
+    public static final String BASE_URL = "http://192.168.1.11/airlanggaBimbel/public/api/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class IzinView extends AppCompatActivity {
         setContentView(R.layout.activity_izin_view);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(IzinView.this);
-        karyawan_id = sharedPreferences.getString("karyawan_id", null);
+        karyawan_kode = sharedPreferences.getString("karyawan_kode", null);
 
         pd = new ProgressDialog(this);
         Rv_Izin = findViewById(R.id.Rv_izin);
@@ -56,7 +56,7 @@ public class IzinView extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiClient izinApi = retrofit.create(ApiClient.class);
-        Call<List<DataIzin>> call = izinApi.getIzin(karyawan_id);
+        Call<List<DataIzin>> call = izinApi.getIzin(karyawan_kode);
         call.enqueue(new Callback<List<DataIzin>>() {
             @Override
             public void onResponse(Call<List<DataIzin>> call, Response<List<DataIzin>> response) {

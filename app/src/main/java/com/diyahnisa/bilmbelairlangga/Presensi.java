@@ -1,4 +1,4 @@
- package com.example.bilmbelairlangga;
+ package com.diyahnisa.bilmbelairlangga;
 
  import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -25,8 +25,8 @@ import androidx.annotation.NonNull;
  import androidx.annotation.RequiresApi;
  import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bilmbelairlangga.ApiService.ApiClient;
-import com.example.bilmbelairlangga.Model.ResponPresensi;
+import com.diyahnisa.bilmbelairlangga.ApiService.ApiClient;
+import com.diyahnisa.bilmbelairlangga.Model.ResponPresensi;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
@@ -42,12 +42,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Presensi extends AppCompatActivity {
 
     EditText editTanggal, editTime;
-    String karyawan_id, tglPresensi, waktuPresensi, ketPresensi, lokasiRuang;
+    String karyawan_kode, tglPresensi, waktuPresensi, ketPresensi, lokasiRuang;
     DatePickerDialog datePickerDialog;
     SimpleDateFormat dateFormat;
     Button btnPresensi;
-    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
-    SharedPreferences sharedPreferences;
+    public static final String BASE_URL = "http://192.168.1.11/airlanggaBimbel/public/api/";
+//    public static final String BASE_URL = "https://bimbelairlangga.my.id/public/api/";
+    SharedPreferences sharedPreferences;public
     Spinner spinner;
     private String [] lokasiR = {"Alpha.01","Alpha.02","Alpha.03","Alpha.04",
                                     "Betha.01","Betha.02","Betha.03","Betha.04" };
@@ -58,7 +59,7 @@ public class Presensi extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Presensi.this);
         editTanggal=(EditText)findViewById(R.id.editTanggal);
-        karyawan_id = sharedPreferences.getString("karyawan_id", null);
+        karyawan_kode = sharedPreferences.getString("karyawan_kode", null);
 
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item, lokasiR);
@@ -202,7 +203,7 @@ public class Presensi extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             ApiClient presensiApi = retrofit.create(ApiClient.class);
-            Call<ResponPresensi> call = presensiApi.addPresensi(karyawan_id,tglPresensi,waktuPresensi,ketPresensi, lokasiRuang);
+            Call<ResponPresensi> call = presensiApi.addPresensi(karyawan_kode,tglPresensi,waktuPresensi,ketPresensi, lokasiRuang);
             call.enqueue(new Callback<ResponPresensi>() {
                 @Override
                 public void onResponse(Call<ResponPresensi> call, Response<ResponPresensi> response) {
@@ -217,7 +218,7 @@ public class Presensi extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         Intent intent = new Intent(Presensi.this,LogBook.class);
-                                        intent.putExtra("karyawan_id",karyawan_id);
+                                        intent.putExtra("karyawan_kode",karyawan_kode);
                                         startActivity(intent);
                                     }
                                 });

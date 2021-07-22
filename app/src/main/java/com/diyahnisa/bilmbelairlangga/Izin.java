@@ -1,10 +1,9 @@
-package com.example.bilmbelairlangga;
+package com.diyahnisa.bilmbelairlangga;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,20 +22,18 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bilmbelairlangga.ApiService.ApiClient;
-import com.example.bilmbelairlangga.Model.ResponLog;
+import com.diyahnisa.bilmbelairlangga.ApiService.ApiClient;
+import com.diyahnisa.bilmbelairlangga.Model.ResponIzin;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -46,137 +44,104 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LogBook extends AppCompatActivity {
+public class Izin extends AppCompatActivity {
 
-    ImageView viewBukti;
-    EditText editTanggal2, editTime2, editTime3, editKetLog;
+    EditText editTglIzin, editTglMasuk, editDurasi;
+    ImageView viewSurat;
     DatePickerDialog datePickerDialog;
     SimpleDateFormat dateFormat;
-    Button btnLogBook, btnLihatLog, btnBukti;
-    String mediaPath, postPath;
+    Button btnIzin, btnLihatIzin, btnSurat;
+    String  mediaPath, postPath;
     SharedPreferences sharedPreferences;
 
-    //Request User
-    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
-    private  static final int IMAGE = 100;
+    private  int REQ_IMG = 21;
     public static final int REQUEST_WRITE_PERMISSION = 786;
+    public static final String BASE_URL = "http://192.168.1.11t/airlanggaBimbel/public/api/";
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_WRITE_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            kirimLogBook();
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, REQ_IMG);
         }
     }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_book);
+        setContentView(R.layout.activity_izin);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LogBook.this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Izin.this);
 
-        // Identifikasi Komponen Form
-        viewBukti = (ImageView) findViewById(R.id.viewBukti);
-        editKetLog =(EditText) findViewById(R.id.editKetLog);
+        editDurasi=(EditText) findViewById(R.id.editDurasi);
+        viewSurat = (ImageView) findViewById(R.id.viewSurat);
         dateFormat = new SimpleDateFormat("dd-MM-yyy");
 
-        editTanggal2=(EditText)findViewById(R.id.editTanggal2);
-        editTanggal2.setOnClickListener(new View.OnClickListener() {
+        editTglIzin=(EditText) findViewById(R.id.editTglIzin);
+        editTglIzin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
 
-                datePickerDialog = new DatePickerDialog(LogBook.this, new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(Izin.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year,month,dayOfMonth);
-                        editTanggal2.setText(dateFormat.format(newDate.getTime()));
+                        editTglIzin.setText(dateFormat.format(newDate.getTime()));
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
             }
         });
 
-        editTime2=(EditText)findViewById(R.id.editTime2);
-        editTime2.setOnClickListener(new View.OnClickListener() {
+        editTglMasuk=(EditText)findViewById(R.id.editTglMasuk);
+        editTglMasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar= Calendar.getInstance();
-                int hours=calendar.get(Calendar.HOUR_OF_DAY);
-                int mins=calendar.get(Calendar.MINUTE);
-//        TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, new TimePickerDialog.OnTimeSetListener() {
+                Calendar calendar = Calendar.getInstance();
+
+                datePickerDialog = new DatePickerDialog(Izin.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-                        c.setTimeZone(TimeZone.getDefault());
-                        SimpleDateFormat format = new SimpleDateFormat("k:mm a");
-                        String time = format.format(c.getTime());
-                        editTime2.setText(time);
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(year,month,dayOfMonth);
+                        editTglMasuk.setText(dateFormat.format(newDate.getTime()));
                     }
-                },hours ,mins, false);
-                timePickerDialog.show();
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
             }
         });
 
-        editTime3=(EditText)findViewById(R.id.editTime3);
-        editTime3.setOnClickListener(new View.OnClickListener() {
+        btnLihatIzin = (Button) findViewById(R.id.btnLihatIzin);
+        btnLihatIzin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar= Calendar.getInstance();
-                int hours=calendar.get(Calendar.HOUR_OF_DAY);
-                int mins=calendar.get(Calendar.MINUTE);
-//        TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, R.style.Theme_AppCompat_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(LogBook.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-                        c.setTimeZone(TimeZone.getDefault());
-                        SimpleDateFormat format = new SimpleDateFormat("k:mm a");
-                        String time = format.format(c.getTime());
-                        editTime3.setText(time);
-                    }
-                },hours ,mins, false);
-                timePickerDialog.show();
+                Intent godata = new Intent(Izin.this, IzinView.class);
+                godata.putExtra("karyawan_kode", sharedPreferences.getString("karyawan_kode",null));
+                startActivity(godata);
             }
         });
 
-        btnBukti = (Button) findViewById(R.id.btnBukti);
-        btnBukti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, IMAGE);
-            }
-        });
-
-        btnLogBook= (Button) findViewById(R.id.btnLogBook);
-        btnLogBook.setOnClickListener(new View.OnClickListener() {
+        btnSurat = (Button) findViewById(R.id.btnSurat);
+        btnSurat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requestPermission();
             }
         });
 
-        btnLihatLog = (Button) findViewById(R.id.btnLihatLog);
-        btnLihatLog.setOnClickListener(new View.OnClickListener() {
+        btnIzin = (Button) findViewById(R.id.btnIzin);
+        btnIzin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent godata = new Intent(LogBook.this, LogBookView.class);
-                godata.putExtra("karyawan_id", sharedPreferences.getString("karyawan_id",null));
-                startActivity(godata);
+                kirimIzin();
             }
         });
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.button_logbook);
-        bottomNavigationView.setSelectedItemId(R.id.nav_logBook);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.button_izin);
+        bottomNavigationView.setSelectedItemId(R.id.nav_izin);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
@@ -191,11 +156,11 @@ public class LogBook extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return false;
                     case R.id.nav_logBook:
+                        startActivity(new Intent(getApplicationContext()
+                                , LogBook.class));
+                        overridePendingTransition(0,0);
                         return false;
                     case R.id.nav_izin:
-                        startActivity(new Intent(getApplicationContext()
-                                , Izin.class));
-                        overridePendingTransition(0,0);
                         return false;
                 }
                 return false;
@@ -207,7 +172,9 @@ public class LogBook extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
         } else {
-            kirimLogBook();
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, REQ_IMG);
         }
     }
 
@@ -216,7 +183,7 @@ public class LogBook extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            if (requestCode == IMAGE) {
+            if (requestCode == REQ_IMG) {
                 if (data != null) {
                     Uri selectedFile = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -227,7 +194,7 @@ public class LogBook extends AppCompatActivity {
 
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     mediaPath = cursor.getString(columnIndex);
-                    viewBukti.setImageURI(data.getData());
+                    viewSurat.setImageURI(data.getData());
                     cursor.close();
 
                     postPath = mediaPath;
@@ -237,26 +204,25 @@ public class LogBook extends AppCompatActivity {
 
     }
 
-    private void kirimLogBook() {
+    public void kirimIzin() {
         if (mediaPath== null)
         {
-            Toast.makeText(getApplicationContext(), "Pilih gambar terlebih dahul ...", Toast.LENGTH_LONG).show();
-        }
-        else {
+            Toast.makeText(getApplicationContext(), "Form tidak boleh kosong", Toast.LENGTH_LONG).show();
+        } else {
             File imageFile = new File(mediaPath);
-            RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imageFile);
-            MultipartBody.Part buktiFoto = MultipartBody.Part.createFormData("buktiFoto", imageFile.getName(), reqBody);
-//            Log.d("LIHAT", imageFile.getName());
 
-            RequestBody karyawan_id = RequestBody.create(MultipartBody.FORM, sharedPreferences.getString("karyawan_id", null));
-            RequestBody tglKegiatan = RequestBody.create(MultipartBody.FORM, editTanggal2.getText().toString());
-            RequestBody waktuMulai = RequestBody.create(MultipartBody.FORM, editTime2.getText().toString());
-            RequestBody waktuSelesai = RequestBody.create(MultipartBody.FORM, editTime3.getText().toString());
-            RequestBody ketLog = RequestBody.create(MultipartBody.FORM, editKetLog.getText().toString());
+            RequestBody karyawan_kode = RequestBody.create(MultipartBody.FORM, sharedPreferences.getString("karyawan_kode", null));
+            RequestBody tglIzin = RequestBody.create(MultipartBody.FORM, editTglIzin.getText().toString());
+            RequestBody tglSelesai = RequestBody.create(MultipartBody.FORM, editTglMasuk.getText().toString());
+            RequestBody durasi = RequestBody.create(MultipartBody.FORM, editDurasi.getText().toString());
+            RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imageFile);
+            MultipartBody.Part buktiSurat = MultipartBody.Part.createFormData("buktiSurat", imageFile.getName(), reqBody);
+            Log.d("LIhat1", imageFile.getName());
+
 
             //membuat pesan dialog
             androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
-            ProgressDialog progressDialog = new ProgressDialog(LogBook.this);
+            ProgressDialog progressDialog = new ProgressDialog(Izin.this);
             progressDialog.setCancelable(false);
             progressDialog.setMessage("Tunggu sebentar...");
             progressDialog.show();
@@ -265,13 +231,14 @@ public class LogBook extends AppCompatActivity {
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            ApiClient logBookApi = retrofit.create(ApiClient.class);
-            Call<ResponLog> call = logBookApi.addLog(karyawan_id, tglKegiatan, waktuMulai, waktuSelesai, ketLog, buktiFoto);
-            call.enqueue(new Callback<ResponLog>() {
+            ApiClient izinApi = retrofit.create(ApiClient.class);
+            Call<ResponIzin> call = izinApi.addIzin(karyawan_kode, tglIzin, tglSelesai, durasi, buktiSurat);
+            call.enqueue(new Callback<ResponIzin>() {
                 @Override
-                public void onResponse(Call<ResponLog> call, Response<ResponLog> response) {
+                public void onResponse(Call<ResponIzin> call, Response<ResponIzin> response) {
                     String success = response.body().getSuccess();
                     String message = response.body().getMessage();
+
                     if (success != null) {
                         alertDialogBuilder.setTitle("Informasi");
                         alertDialogBuilder
@@ -280,17 +247,17 @@ public class LogBook extends AppCompatActivity {
                                 .setNeutralButton("Oke", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        Intent intent = new Intent(LogBook.this, Izin.class);
-                                        intent.putExtra("karyawan_id", sharedPreferences.getString("karyawan_id", null));
+                                        Intent intent = new Intent(Izin.this, Izin.class);
                                         startActivity(intent);
                                     }
                                 });
                         androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
                         alertDialog.show();
                     } else {
+//                        Toast.makeText(Presensi.this, "Tidak berhasil melakukan presensi", Toast.LENGTH_SHORT).show();
                         alertDialogBuilder.setTitle("Informasi");
                         alertDialogBuilder
-                                .setMessage("Tidak berhasil melakukan pencatatan Log Book")
+                                .setMessage("Tidak berhasil melakukan permohonan izin")
                                 .setCancelable(false)
                                 .setNeutralButton("Oke", new DialogInterface.OnClickListener() {
                                     @Override
@@ -303,26 +270,18 @@ public class LogBook extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponLog> call, Throwable t) {
+                public void onFailure(Call<ResponIzin> call, Throwable t) {
                     progressDialog.dismiss();
-                    alertDialogBuilder.setTitle("Informasi");
-                    alertDialogBuilder
-                            .setMessage("Gagal menghubungkan ke server")
-                            .setCancelable(false)
-                            .setNeutralButton("Oke", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                }
-                            });
-                    androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-//                    Toast.makeText(LogBook.this, "Gagal Menghubungi Server "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("RETRO", "ON FAILURE : " + t.getMessage());
+                    Toast.makeText(Izin.this, "Gagal Menghubungi Server "+t.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Error, image", Toast.LENGTH_LONG).show();
                 }
             });
+
         }
     }
 
-    // Menu LogOut
+//    Menu LogOut
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bottom_logout, menu);
@@ -345,7 +304,7 @@ public class LogBook extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.clear();
                                 editor.apply();
-                                startActivity(new Intent(LogBook.this, Login.class));
+                                startActivity(new Intent(Izin.this, Login.class));
                                 finish();
                             }
                         }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
@@ -361,4 +320,3 @@ public class LogBook extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-

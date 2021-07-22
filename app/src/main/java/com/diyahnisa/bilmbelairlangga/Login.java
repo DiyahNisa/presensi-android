@@ -1,4 +1,4 @@
-package com.example.bilmbelairlangga;
+package com.diyahnisa.bilmbelairlangga;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bilmbelairlangga.ApiService.LoginApi;
-import com.example.bilmbelairlangga.Model.Value;
+import com.diyahnisa.bilmbelairlangga.ApiService.LoginApi;
+import com.diyahnisa.bilmbelairlangga.Model.Value;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,9 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Login extends AppCompatActivity {
 
-    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
+    public static final String BASE_URL = "http://192.168.1.11/airlanggaBimbel/public/api/";
     String username, password;
-    String karyawan_id, message, success;
+    String karyawan_kode, message, success;
     EditText editUsername, editPassword;
     Button btnLogin;
     static String KEY_USER = "nama_user";
@@ -86,7 +86,7 @@ public class Login extends AppCompatActivity {
                 public void onResponse(Call<Value> call, Response<Value> response) {
                     success = response.body().getSuccess();
                     message = response.body().getMessage();
-                    karyawan_id = response.body().getKaryawan_id();
+                    karyawan_kode = response.body().getKaryawan_kode();
                     progressDialog.dismiss();
                     if (success.equals("1")) {
                         gotoMainActivity();
@@ -120,6 +120,8 @@ public class Login extends AppCompatActivity {
                             });
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
+
+//                    Toast.makeText(Login.this, "Gagal Menghubungi Server "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -130,7 +132,7 @@ public class Login extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USER, message);
-        editor.putString( "karyawan_id", karyawan_id);
+        editor.putString( "karyawan_kode", karyawan_kode);
                 editor.putString("status", "Logged In");
                 editor.apply();
                 Intent intent = new Intent(Login.this,

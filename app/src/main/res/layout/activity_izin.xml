@@ -56,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView9"
         app:layout_constraintHorizontal_bias="0.312"
         app:layout_constraintStart_toStartOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/textView4"
@@ -80,7 +81,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView9"
         app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/textView5"
@@ -103,7 +105,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView9"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        android:textColor="@color/black"/>
 
     <ImageView
         android:id="@+id/viewSurat"

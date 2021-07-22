@@ -1,6 +1,6 @@
-package com.example.bilmbelairlangga.ApiService;
+package com.diyahnisa.bilmbelairlangga.ApiService;
 
-import com.example.bilmbelairlangga.Model.Value;
+import com.diyahnisa.bilmbelairlangga.Model.Value;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

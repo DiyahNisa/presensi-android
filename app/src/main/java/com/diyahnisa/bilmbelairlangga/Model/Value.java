@@ -1,15 +1,15 @@
-package com.example.bilmbelairlangga.Model;
+package com.diyahnisa.bilmbelairlangga.Model;
 
 public class Value {
 
     String success;
     String message;
-    String karyawan_id;
+    String karyawan_kode;
 
-    public Value(String success, String message, String karyawan_id) {
+    public Value(String success, String message, String karyawan_kode) {
         this.success = success;
         this.message = message;
-        this.karyawan_id = karyawan_id;
+        this.karyawan_kode = karyawan_kode;
     }
 
     public String getSuccess() {
@@ -20,7 +20,7 @@ public class Value {
         return message;
     }
 
-    public String getKaryawan_id() {
-        return karyawan_id;
+    public String getKaryawan_kode() {
+        return karyawan_kode;
     }
 }
