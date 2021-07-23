@@ -33,8 +33,8 @@ public class LogBookView extends AppCompatActivity {
     private RecyclerView.LayoutManager lmData;
     private List<DataLog> listLog = new ArrayList<>();
 
-    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
-
+//    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
+    public static final String BASE_URL = "https://bimbelairlangga.my.id/public/api/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -32,8 +32,8 @@ public class IzinView extends AppCompatActivity {
     ProgressDialog pd;
     String karyawan_kode;
     SharedPreferences sharedPreferences;
-    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
-
+//    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
+    public static final String BASE_URL = "https://bimbelairlangga.my.id/public/api/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

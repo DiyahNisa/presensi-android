@@ -58,7 +58,8 @@ public class LogBook extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
     //Request User
-    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
+//    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
+        public static final String BASE_URL = "https://bimbelairlangga.my.id/public/api/";
     private  static final int IMAGE = 100;
     private  static final int KAMERA = 101;
     public static final int REQUEST_WRITE_PERMISSION = 786;
