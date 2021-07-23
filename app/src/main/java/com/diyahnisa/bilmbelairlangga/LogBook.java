@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,13 +53,14 @@ public class LogBook extends AppCompatActivity {
     EditText editTanggal2, editTime2, editTime3, editKetLog;
     DatePickerDialog datePickerDialog;
     SimpleDateFormat dateFormat;
-    Button btnLogBook, btnLihatLog, btnBukti;
+    Button btnLogBook, btnLihatLog, btnBukti, btnKamera;
     String mediaPath, postPath;
     SharedPreferences sharedPreferences;
 
     //Request User
-    public static final String BASE_URL = "http://192.168.1.11/airlanggaBimbel/public/api/";
+    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
     private  static final int IMAGE = 100;
+    private  static final int KAMERA = 101;
     public static final int REQUEST_WRITE_PERMISSION = 786;
 
     @Override
@@ -147,11 +149,28 @@ public class LogBook extends AppCompatActivity {
             }
         });
 
+        btnKamera = (Button) findViewById(R.id.btnKamera);
+        btnKamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intentCamera, KAMERA);
+            }
+        });
+
         btnBukti = (Button) findViewById(R.id.btnBukti);
         btnBukti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestPermission();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+                } else {
+
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, IMAGE);
+                }
             }
         });
 
@@ -203,16 +222,16 @@ public class LogBook extends AppCompatActivity {
         });
     }
 
-    private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
-        } else {
-
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, IMAGE);
-        }
-    }
+//    private void requestPermission() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+//        } else {
+//
+//            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+//            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//            startActivityForResult(galleryIntent, IMAGE);
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -235,6 +254,10 @@ public class LogBook extends AppCompatActivity {
 
                     postPath = mediaPath;
                 }
+            } else if(requestCode == KAMERA){
+
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                viewBukti.setImageBitmap(bitmap);
             }
         }
 

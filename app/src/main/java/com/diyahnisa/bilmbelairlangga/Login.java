@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Login extends AppCompatActivity {
 
-    public static final String BASE_URL = "http://192.168.1.11/airlanggaBimbel/public/api/";
+    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
     String username, password;
     String karyawan_kode, message, success;
     EditText editUsername, editPassword;

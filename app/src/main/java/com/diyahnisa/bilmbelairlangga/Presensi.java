@@ -46,7 +46,7 @@ public class Presensi extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     SimpleDateFormat dateFormat;
     Button btnPresensi;
-    public static final String BASE_URL = "http://192.168.1.11/airlanggaBimbel/public/api/";
+    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
 //    public static final String BASE_URL = "https://bimbelairlangga.my.id/public/api/";
     SharedPreferences sharedPreferences;public
     Spinner spinner;

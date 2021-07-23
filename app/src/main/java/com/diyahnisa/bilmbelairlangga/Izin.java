@@ -56,7 +56,7 @@ public class Izin extends AppCompatActivity {
 
     private  int REQ_IMG = 21;
     public static final int REQUEST_WRITE_PERMISSION = 786;
-    public static final String BASE_URL = "http://192.168.1.11t/airlanggaBimbel/public/api/";
+    public static final String BASE_URL = "http://192.168.0.104/airlanggaBimbel/public/api/";
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
